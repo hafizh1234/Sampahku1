@@ -17,7 +17,8 @@ class MainActivity : AppCompatActivity() {
 
         }
         binding.btnRegister.setOnClickListener{
-            var intent=Intent(this@MainActivity,RegisterActivity::class.java)
+            var intent1=Intent(this@MainActivity,RegisterActivity::class.java)
+            startActivity(intent1)
         }
     }
 }

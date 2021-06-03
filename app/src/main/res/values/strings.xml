@@ -17,4 +17,11 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="mulai_hitung">Mulai Hitung</string>
+    <string name="mulai_pisahkan_sampah">Mulai pisahkan sampah</string>
+    <string name="identifikasi_sampah">Identifikasi sampah</string>
+    <string name="lihat_riwayat_perhitungan">Lihat riwayat perhitungan</string>
+    <string name="lihat_riwayat">Lihat riwayat</string>
+    <string name="perhitung">Untuk memulai perhitungan:\n1. Silahkan ambil gambar atau pilih dari galeri</string>
+    <string name="ambil_gambar">Ambil gambar</string>
+    <string name="_2_silahkan_pilih_lokasi">2. Silahkan pilih lokasi</string>
 </resources>
