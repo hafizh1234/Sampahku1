@@ -24,4 +24,5 @@
     <string name="perhitung">Untuk memulai perhitungan:\n1. Silahkan ambil gambar atau pilih dari galeri</string>
     <string name="ambil_gambar">Ambil gambar</string>
     <string name="_2_silahkan_pilih_lokasi">2. Silahkan pilih lokasi</string>
+    <string name="welcome">Selamat datang!\nmulai identifkasi\nsampahmu</string>
 </resources>
