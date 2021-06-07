@@ -1,4 +1,4 @@
-package com.projek.sampahku1
+package com.projek.sampahku1.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -12,12 +12,12 @@ class MainActivity : AppCompatActivity() {
         binding= ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.btnLogin.setOnClickListener{
-            var intent= Intent(this@MainActivity,LoginActivity::class.java)
+            var intent= Intent(this@MainActivity, LoginActivity::class.java)
             startActivity(intent)
 
         }
         binding.btnRegister.setOnClickListener{
-            var intent1=Intent(this@MainActivity,RegisterActivity::class.java)
+            var intent1=Intent(this@MainActivity, RegisterActivity::class.java)
             startActivity(intent1)
         }
     }

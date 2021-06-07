@@ -1,10 +1,11 @@
-package com.projek.sampahku1
+package com.projek.sampahku1.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import com.projek.sampahku1.R
 import com.projek.sampahku1.databinding.ActivityMainPageBinding
 
 class MainPageActivity : AppCompatActivity() {
@@ -18,7 +19,7 @@ class MainPageActivity : AppCompatActivity() {
         supportActionBar?.title="Pengambilan hasil"
 
         binding.cardviewTransaksi.setOnClickListener{
-            val intent=Intent(this@MainPageActivity,PerhitunganActivity::class.java)
+            val intent=Intent(this@MainPageActivity, PerhitunganActivity::class.java)
             startActivity(intent)
         }
     }
@@ -31,7 +32,7 @@ class MainPageActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
-            R.id.menu_logout->{
+            R.id.menu_logout ->{
 
             }
         }

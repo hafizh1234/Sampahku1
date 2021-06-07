@@ -1,30 +1,29 @@
-package com.projek.sampahku1
+package com.projek.sampahku1.activity
 
 import android.app.Activity
 import android.content.ActivityNotFoundException
+import android.content.ContentResolver
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.content.res.Resources
-import android.graphics.Bitmap
+import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-
 import android.view.View
-
+import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.projek.sampahku1.databinding.ActivityPerhitunganBinding
-
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.FileProvider
-import com.bumptech.glide.load.engine.Resource
+import com.google.android.gms.tasks.OnSuccessListener
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.UploadTask
+import com.projek.sampahku1.databinding.ActivityPerhitunganBinding
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -32,9 +31,9 @@ import java.util.*
 
 class PerhitunganActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPerhitunganBinding
-    private var isGranted: Boolean = false
-    var imageUri: Uri? = null
-    lateinit var currentPhotoPath: String
+    private var imageUri: Uri? = null
+    private lateinit var currentPhotoPath: String
+    private lateinit var database:StorageReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +46,7 @@ class PerhitunganActivity : AppCompatActivity() {
         binding.ivHasilGambar.visibility = View.GONE
         val btnGallery = binding.pilihGaleri
         askPermissionCamera()
+        database=FirebaseStorage.getInstance().reference
         btnCamera.setOnClickListener {
             val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
 
@@ -133,8 +133,14 @@ class PerhitunganActivity : AppCompatActivity() {
 
     @Throws(IOException::class)
     private fun createImageFile(): File {
-        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss",Locale.getDefault()).format(Date())
+
+        val storageDir:File? = if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.Q){
+            getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        } else {
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+        }
+
         return File.createTempFile(
             "JPEG_${timeStamp}_",
             ".jpg",
@@ -151,19 +157,49 @@ class PerhitunganActivity : AppCompatActivity() {
                 val imageBitmap=bundle?.get("data") as Bitmap
                 println("Debug: photoUri= ${imageUri}")
                */
-                var imageFile = File(currentPhotoPath)
+                val imageFile = File(currentPhotoPath)
+                MediaScannerConnection.scanFile(this,arrayOf(imageFile.toString()),arrayOf(imageFile.name),null)
 
                 binding.ivHasilGambar.setImageURI(Uri.fromFile(imageFile))
                 binding.ivHasilGambar.visibility = View.VISIBLE
+                /*upload to firebase*/
+                uploadImageToFirebase(imageFile.name,Uri.fromFile(imageFile),"fromTakePicture")
             }
         }
+    private fun getFileExt(contentUri: Uri): String? {
+        val k:ContentResolver=contentResolver
+        val mime: MimeTypeMap = MimeTypeMap.getSingleton()
+        return mime.getExtensionFromMimeType(k.getType(contentUri))
+    }
+    private fun uploadImageToFirebase(imageFilename: String, uri: Uri,location:String) {
+        lateinit var image:StorageReference
+        if(location=="fromTakePicture") {
+            image = database.child(currentPhotoPath + imageFilename)
+        }
+        else if(location=="fromPicture"){
+           image=database.child("pictures/$imageFilename")
+        }
+        image.putFile(uri).addOnSuccessListener {
+            OnSuccessListener<UploadTask.TaskSnapshot> {
+                image.downloadUrl.addOnSuccessListener { OnSuccessListener<Uri> { Toast.makeText(this@PerhitunganActivity,"uploaded image is:$uri",Toast.LENGTH_LONG).show() } }
+            }
+        }.addOnFailureListener { p0 ->
+            Toast.makeText(
+                this@PerhitunganActivity,
+                "${p0.message}",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
 
     private val pickImages =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
             uri?.let { uri ->
                 binding.ivHasilGambar.setImageURI(uri)
                 binding.ivHasilGambar.visibility = View.VISIBLE
-
+                val timeStamp=SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+                val imageFilename="JPEG_"+timeStamp+"."+getFileExt(uri)
+                uploadImageToFirebase(imageFilename,uri,"fromPicture")
             }
         }
 }

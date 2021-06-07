@@ -1,4 +1,4 @@
-package com.projek.sampahku1
+package com.projek.sampahku1.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -12,7 +12,7 @@ class LoginActivity : AppCompatActivity() {
         binding= ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.btnLogin.setOnClickListener{
-            val intent=Intent(this@LoginActivity,MainPageActivity::class.java)
+            val intent=Intent(this@LoginActivity, MainPageActivity::class.java)
             startActivity(intent)
         }
     }

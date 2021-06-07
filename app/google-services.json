@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "716653464182",
+    "project_id": "sampahku1-a8697",
+    "storage_bucket": "sampahku1-a8697.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:716653464182:android:b96d27d1fd22a023ff6d57",
+        "android_client_info": {
+          "package_name": "com.projek.sampahku1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "716653464182-2719jfo7aph78eocuhb9gh4883msjfg8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBM3zpCwiCrNns17JVrzXyAapAVGgP27aU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "716653464182-2719jfo7aph78eocuhb9gh4883msjfg8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
