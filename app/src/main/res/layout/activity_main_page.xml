@@ -31,7 +31,7 @@
                 android:textSize="24sp"
                 android:textStyle="bold"
                 android:textColor="@color/white"
-                android:text="Hello, Vito"
+                android:text="@string/hello_vito"
                 android:id="@+id/nama_toolbar"
                 />
 

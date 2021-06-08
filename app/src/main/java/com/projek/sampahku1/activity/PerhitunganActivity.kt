@@ -47,6 +47,7 @@ class PerhitunganActivity : AppCompatActivity() {
         val btnGallery = binding.pilihGaleri
         askPermissionCamera()
         database=FirebaseStorage.getInstance().reference
+        askPermissionStorage()
         btnCamera.setOnClickListener {
             val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
 
@@ -80,6 +81,24 @@ class PerhitunganActivity : AppCompatActivity() {
         }
     }
 
+    private fun askPermissionStorage() {
+        val stringOfPerm = arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        if (ContextCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.CAMERA
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(this, stringOfPerm, 101)
+            Toast.makeText(
+                this,
+                "Untuk menggunakan camera, izinkan aplikasi memakai kamera anda",
+                Toast.LENGTH_SHORT
+            ).show()
+
+        } else {
+            binding.layout.visibility = View.VISIBLE
+        }
+    }
     private fun askPermissionCamera() {
         val stringOfPerm = arrayOf(android.Manifest.permission.CAMERA)
         if (ContextCompat.checkSelfPermission(
