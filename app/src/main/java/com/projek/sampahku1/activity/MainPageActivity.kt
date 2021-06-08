@@ -9,6 +9,7 @@ import com.projek.sampahku1.R
 import com.projek.sampahku1.databinding.ActivityMainPageBinding
 import com.projek.sampahku1.model.RegistrationResponse
 import com.projek.sampahku1.model.ResponseLogin
+import com.projek.sampahku1.session.SessionManager
 
 class MainPageActivity : AppCompatActivity() {
     private lateinit var binding:ActivityMainPageBinding
@@ -19,17 +20,10 @@ class MainPageActivity : AppCompatActivity() {
         val toolbar=binding.toolbar
         setSupportActionBar(toolbar)
         supportActionBar?.title="Pengambilan hasil"
+        val sessionManager:SessionManager=SessionManager(this)
+        val userDetail=sessionManager.getUsersDetail()
+        binding.namaToolbar.text="Hello, ${userDetail.get(SessionManager.KEY_USERNAME)}"
 
-
-        val hasilRegister=intent.getParcelableExtra<RegistrationResponse>(DATA_USER_REGISTER)
-
-        val hasilLogin=intent.getParcelableExtra<ResponseLogin>(DATA_USER_LOGIN)
-        if(hasilRegister!=null){
-            binding.namaToolbar.text="Hello, ${hasilRegister?.username}"
-        }
-        else if(hasilLogin!=null){
-            binding.namaToolbar.text="Hello, ${hasilLogin?.username}"
-        }
         binding.cardviewTransaksi.setOnClickListener{
             val intent=Intent(this@MainPageActivity, PerhitunganActivity::class.java)
             startActivity(intent)

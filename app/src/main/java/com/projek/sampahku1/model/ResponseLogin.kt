@@ -6,9 +6,13 @@ import android.os.Parcelable
 data class ResponseLogin(
     var username: String?,
     var password: String?,
-    var id: String?
+    var id: String?,
+    var fullname:String?,
+    var email:String?
 ):Parcelable {
     constructor(parcel: Parcel) : this(
+        parcel.readString(),
+        parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString()) {
@@ -18,6 +22,8 @@ data class ResponseLogin(
         parcel.writeString(username)
         parcel.writeString(password)
         parcel.writeString(id)
+        parcel.writeString(fullname)
+        parcel.writeString(email)
     }
 
     override fun describeContents(): Int {

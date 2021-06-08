@@ -88,7 +88,7 @@ class PerhitunganActivity : AppCompatActivity() {
                 android.Manifest.permission.CAMERA
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            ActivityCompat.requestPermissions(this, stringOfPerm, 101)
+            ActivityCompat.requestPermissions(this, stringOfPerm, 102)
             Toast.makeText(
                 this,
                 "Untuk menggunakan camera, izinkan aplikasi memakai kamera anda",
@@ -135,13 +135,13 @@ class PerhitunganActivity : AppCompatActivity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == 101) {
+        if (requestCode == 101||requestCode==102) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 binding.layout.visibility = View.VISIBLE
             } else {
                 Toast.makeText(
                     this,
-                    "Untuk menggunakan camera, izinkan aplikasi memakai kamera anda",
+                    "Untuk menggunakan camera, izinkan aplikasi memakai kamera dan mengakses file anda",
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -154,7 +154,7 @@ class PerhitunganActivity : AppCompatActivity() {
     private fun createImageFile(): File {
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss",Locale.getDefault()).format(Date())
 
-        val storageDir:File? = if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.Q){
+        val storageDir:File? = if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.P){
             getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         } else {
             Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)

@@ -8,6 +8,7 @@ import com.projek.sampahku1.api.ApiInstance
 import com.projek.sampahku1.databinding.ActivityRegisterBinding
 import com.projek.sampahku1.model.RegistrationPureResponse
 import com.projek.sampahku1.model.RequestRegistration
+import com.projek.sampahku1.session.SessionManager
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -42,10 +43,11 @@ class RegisterActivity : AppCompatActivity() {
             }
             if(!textAdaYangEmpty) {
                 val registerRequest = RequestRegistration(
+                    etUsername.text.toString(),
                     etFullname.text.toString(),
                     etEmail.text.toString(),
-                    etPassword.text.toString(),
-                    etUsername.text.toString()
+                    etPassword.text.toString()
+
                 )
                 registerUser(registerRequest)
             }
@@ -66,13 +68,18 @@ class RegisterActivity : AppCompatActivity() {
                     val data=responseRegis?.register
                     val message = "Successful register"
                     Toast.makeText(this@RegisterActivity, message, Toast.LENGTH_LONG).show()
-                    startActivity(Intent(this@RegisterActivity, MainPageActivity::class.java).putExtra(MainPageActivity.DATA_USER_REGISTER,data))
-                } else {
-                    Toast.makeText(this@RegisterActivity,
-                        "Tidak bisa mendaftar sekarang, silahkan coba lagi beberapa saat",
-                        Toast.LENGTH_LONG).show()
+                    val sessionManager:SessionManager=SessionManager(this@RegisterActivity)
+                    sessionManager.createLoginSession(data?.username.toString(),data?.password.toString(),data?.fullname.toString(),data?.email.toString())
+
+                    startActivity(Intent(this@RegisterActivity, MainPageActivity::class.java))
                 }
-            }
+                    else{
+                        Toast.makeText(this@RegisterActivity,
+                            "Tidak bisa mendaftar sekarang, silahkan coba lagi beberapa saat",
+                            Toast.LENGTH_LONG).show()
+                    }
+                }
+
 
             override fun onFailure(call: Call<RegistrationPureResponse>, t: Throwable) {
                 Toast.makeText(this@RegisterActivity, t.message, Toast.LENGTH_LONG).show()

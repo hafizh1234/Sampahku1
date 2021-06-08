@@ -10,6 +10,7 @@ import com.projek.sampahku1.databinding.ActivityLoginBinding
 import com.projek.sampahku1.model.RequestLogin
 
 import com.projek.sampahku1.model.ResponseLogin
+import com.projek.sampahku1.session.SessionManager
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -53,8 +54,11 @@ class LoginActivity : AppCompatActivity() {
             override fun onResponse(call: Call<ResponseLogin>, response: Response<ResponseLogin>) {
                 if(response.isSuccessful) {
                     val loginResponse=response.body()
-                    startActivity(Intent(this@LoginActivity,MainPageActivity::class.java).putExtra(
-                        MainPageActivity.DATA_USER_LOGIN,loginResponse))
+                    val sessionManager: SessionManager=SessionManager(this@LoginActivity)
+                    if (loginResponse != null) {
+                        sessionManager.createLoginSession(loginResponse.username.toString(),loginResponse.password.toString(),loginResponse.fullname.toString(),loginResponse.email.toString())
+                    }
+                    startActivity(Intent(this@LoginActivity,MainPageActivity::class.java))
                 }
             }
 
