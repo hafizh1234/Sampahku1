@@ -39,4 +39,16 @@ class RegistrationResponse(
             return arrayOfNulls(size)
         }
     }
+    /*
+    "message": "Succes Register",
+    "register": {
+        "_id": "60c01069a4bcaf0004dbe289",
+        "fullname": "Hafizh1",
+        "username": "Hafizh1",
+        "email": "Hafizh1@gmail.com",
+        "password": "$2a$08$hEyEL5YEIxQaqHlNAkJIBuRQp2RzCYF70/p8y3ODmVJ9Zg8wY2nuO",
+        "__v": 0
+    }
+}*/
 }
+

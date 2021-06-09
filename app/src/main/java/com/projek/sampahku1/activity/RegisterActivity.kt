@@ -69,16 +69,20 @@ class RegisterActivity : AppCompatActivity() {
                     val message = "Successful register"
                     Toast.makeText(this@RegisterActivity, message, Toast.LENGTH_LONG).show()
                     val sessionManager:SessionManager=SessionManager(this@RegisterActivity)
-                    sessionManager.createLoginSession(data?.username.toString(),data?.password.toString(),data?.fullname.toString(),data?.email.toString())
-
+                    if(data!=null) {
+                        sessionManager.createLoginSession(data._id.toString(),
+                            data.username.toString(),
+                            data.fullname.toString(),
+                            data.email.toString())
+                    }
                     startActivity(Intent(this@RegisterActivity, MainPageActivity::class.java))
                 }
-                    else{
-                        Toast.makeText(this@RegisterActivity,
-                            "Tidak bisa mendaftar sekarang, silahkan coba lagi beberapa saat",
-                            Toast.LENGTH_LONG).show()
-                    }
+                else{
+                    Toast.makeText(this@RegisterActivity,
+                        "Tidak bisa mendaftar sekarang, silahkan coba lagi beberapa saat",
+                        Toast.LENGTH_LONG).show()
                 }
+            }
 
 
             override fun onFailure(call: Call<RegistrationPureResponse>, t: Throwable) {

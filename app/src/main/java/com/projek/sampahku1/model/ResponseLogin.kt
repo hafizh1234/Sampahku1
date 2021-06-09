@@ -5,7 +5,6 @@ import android.os.Parcelable
 
 data class ResponseLogin(
     var username: String?,
-    var password: String?,
     var id: String?,
     var fullname:String?,
     var email:String?
@@ -14,13 +13,11 @@ data class ResponseLogin(
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
-        parcel.readString(),
         parcel.readString()) {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(username)
-        parcel.writeString(password)
         parcel.writeString(id)
         parcel.writeString(fullname)
         parcel.writeString(email)

@@ -43,7 +43,7 @@ class LoginActivity : AppCompatActivity() {
                 )
                 loginUser(loginRequest)
             }
-            else{textAdaYangEmpty=false}
+
 
         }
     }
@@ -56,18 +56,17 @@ class LoginActivity : AppCompatActivity() {
                     val loginResponse=response.body()
                     val sessionManager: SessionManager=SessionManager(this@LoginActivity)
                     if (loginResponse != null) {
-                        sessionManager.createLoginSession(loginResponse.username.toString(),loginResponse.password.toString(),loginResponse.fullname.toString(),loginResponse.email.toString())
+                        sessionManager.createLoginSession(loginResponse.id.toString(),loginResponse.username.toString(),loginResponse.fullname.toString(),loginResponse.email.toString())
                     }
                     startActivity(Intent(this@LoginActivity,MainPageActivity::class.java))
                 }
             }
 
             override fun onFailure(call: Call<ResponseLogin>, t: Throwable) {
-               Toast.makeText(this@LoginActivity,"gagal masuk",Toast.LENGTH_LONG).show()
+                Toast.makeText(this@LoginActivity,"gagal masuk",Toast.LENGTH_LONG).show()
             }
 
         })
     }
 
 }
-
