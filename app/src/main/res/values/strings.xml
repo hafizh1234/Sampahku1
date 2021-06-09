@@ -26,4 +26,6 @@
     <string name="welcome">Selamat datang!\nmulai identifkasi\nsampahmu</string>
     <string name="abdullah">Abdullah</string>
     <string name="hello_vito">Hello, Vito</string>
+    <string name="kategori_sampah">Kategori sampah</string>
+    <string name="tanggal_daur_ulang_sampah">Tanggal daur ulang sampah</string>
 </resources>

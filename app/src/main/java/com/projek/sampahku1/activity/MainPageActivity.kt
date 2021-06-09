@@ -7,8 +7,6 @@ import android.view.Menu
 import android.view.MenuItem
 import com.projek.sampahku1.R
 import com.projek.sampahku1.databinding.ActivityMainPageBinding
-import com.projek.sampahku1.model.RegistrationResponse
-import com.projek.sampahku1.model.ResponseLogin
 import com.projek.sampahku1.session.SessionManager
 
 class MainPageActivity : AppCompatActivity() {
@@ -28,7 +26,10 @@ class MainPageActivity : AppCompatActivity() {
             val intent=Intent(this@MainPageActivity, PerhitunganActivity::class.java)
             startActivity(intent)
         }
-
+        binding.cardviewLogTransaksi.setOnClickListener{
+            val intent=Intent(this@MainPageActivity,LogHistoryActivity::class.java)
+            startActivity(intent)
+        }
 
     }
 
